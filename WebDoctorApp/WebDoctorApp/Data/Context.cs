@@ -3,13 +3,13 @@ using WebDoctorApp.Models;
 
 namespace WebDoctorApp.Data;
 
-public class MyContext : DbContext
+public class Context : DbContext
 {
-    protected MyContext()
+    protected Context()
     {
     }
 
-    public MyContext(DbContextOptions options) : base(options)
+    public Context(DbContextOptions options) : base(options)
     {
     }
     

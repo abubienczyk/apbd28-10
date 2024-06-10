@@ -11,8 +11,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 //builder.Services.AddDbContext<MyContext>(
  //   options => options.UseSqlServer("Name=ConnectionStrings:Default"));
-builder.Services.AddDbContext<MyContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+ builder.Services.AddDbContext<Context>(options =>
+     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
