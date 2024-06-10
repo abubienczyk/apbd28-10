@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebDoctorApp.Data;
+using WebDoctorApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,12 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 var app = builder.Build();
+
 //builder.Services.AddDbContext<MyContext>(
  //   options => options.UseSqlServer("Name=ConnectionStrings:Default"));
+
  builder.Services.AddDbContext<Context>(options =>
      options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+ builder.Services.AddScoped<IDbService, DbService>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -23,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
 
 app.Run();
 

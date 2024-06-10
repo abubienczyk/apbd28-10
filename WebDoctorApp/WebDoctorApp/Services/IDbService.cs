@@ -11,4 +11,6 @@ public interface IDbService
     public Task InsertNewPatient(PatientDTO dto);
     public Task AddNewPrescription(Prescription p);
     public Task AddNewPMData(IEnumerable<PrescriptionMedicament> data);
+
+    public Task<ICollection<Prescription>> GetPatientData(int id);
 }

@@ -48,4 +48,27 @@ public class DbService : IDbService
         await _context.AddRangeAsync(data);
         await _context.SaveChangesAsync();
     }
+    
+    // public async Task<ICollection<Order>> GetOrdersData(string? clientLastName)
+    // {
+    //     return await _context.Orders
+    //         .Include(e => e.Client)
+    //         .Include(e => e.OrderPastries)
+    //         .ThenInclude(e => e.Pastry)
+    //         .Where(e => clientLastName == null || e.Client.LastName == clientLastName)
+    //         .ToListAsync();
+    // }
+    
+    public async Task<ICollection<Prescription>> GetPatientData(int id)
+    {
+        return await _context.Prescriptions
+            .Include(e => e.Patient)
+            .Include(e => e.PrescriptionMedicaments)
+            .ThenInclude(e => e.Medicament)
+            .Include(p => p.PrescriptionMedicaments)
+            .ThenInclude(pm => pm.Prescription)
+            .ThenInclude(p => p.Doctor)
+            .Where(p => p.Patient.IdPatient == id)
+            .ToListAsync();
+    }
 }

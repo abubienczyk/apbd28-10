@@ -11,6 +11,7 @@ public class PrescriptionDTO{
     public DateOnly Date { get; set; }
     public DateOnly DueDate { get; set; }
     public ICollection<MedicamentDTO> medicaments { get; set; }
+    public ICollection<DoctorDTO> doctors { get; set; }
 }
 
 public class DoctorDTO
