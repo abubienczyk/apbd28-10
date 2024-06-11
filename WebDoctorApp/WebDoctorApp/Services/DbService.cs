@@ -61,6 +61,7 @@ public class DbService : IDbService
     
     public async Task<ICollection<Prescription>> GetPatientData(int id)
     {
+        
         return await _context.Prescriptions
             .Include(e => e.Patient)
             .Include(e => e.PrescriptionMedicaments)
@@ -70,5 +71,26 @@ public class DbService : IDbService
             .ThenInclude(p => p.Doctor)
             .Where(p => p.Patient.IdPatient == id)
             .ToListAsync();
+        
+        
+        
+        
+        //return await _context.Prescriptions
+        // .Include(e => e.Patient)
+        // .Include(e => e.PrescriptionMedicaments)
+        // .Where(e => e.Patient.IdPatient == id)
+        // .ToListAsync();
     }
+    public async Task<Patient?> GetData(int id)
+    {
+        // Pobierz pacjenta razem z jego receptami, lekarzem i lekami
+        return await _context.Patients
+            .Include(p => p.Prescriptions)
+            .ThenInclude(pr => pr.PrescriptionMedicaments)
+            .ThenInclude(pm => pm.Medicament)
+            .Include(p => p.Prescriptions)
+            .ThenInclude(pr => pr.Doctor)
+            .FirstOrDefaultAsync(p => p.IdPatient == id);
+    }
+
 }
