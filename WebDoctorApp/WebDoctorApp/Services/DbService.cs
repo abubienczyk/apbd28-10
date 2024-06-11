@@ -28,7 +28,6 @@ public class DbService : IDbService
     {
        await _context.Patients.AddAsync(new Patient()
         {
-            IdPatient = dto.IdPatient,
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Birthday = dto.Birthday

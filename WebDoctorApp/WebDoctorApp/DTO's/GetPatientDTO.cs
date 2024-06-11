@@ -3,14 +3,15 @@ namespace WebDoctorApp.DTO_s;
 public class GetPatientDTO
 {
     public PatientDTO patient { get; set; }
-    public ICollection<PrescriptionDTO> prescriptions { get; set; }
+    public ICollection<PrescriptionDTO> prescriptions { get; set; } = new List<PrescriptionDTO>();
 }
 
 public class PrescriptionDTO{
     public int IdPrescription { get; set; }
-    public DateOnly Date { get; set; }
-    public DateOnly DueDate { get; set; }
-    public ICollection<MedicamentDTO> medicaments { get; set; }
+    public DateTime Date { get; set; }
+    public DateTime DueDate { get; set; }
+
+    public ICollection<MedicamentDTO> medicaments { get; set; } = new List<MedicamentDTO>();
    // public ICollection<DoctorDTO> doctors { get; set; }
     public DoctorDTO doctor { get; set; }
 }

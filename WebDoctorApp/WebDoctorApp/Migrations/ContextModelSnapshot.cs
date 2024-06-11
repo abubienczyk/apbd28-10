@@ -17,7 +17,7 @@ namespace WebDoctorApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0-preview.4.24267.1")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -118,8 +118,8 @@ namespace WebDoctorApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPatient"));
 
-                    b.Property<DateOnly>("Birthday")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -139,14 +139,14 @@ namespace WebDoctorApp.Migrations
                         new
                         {
                             IdPatient = 1,
-                            Birthday = new DateOnly(2000, 5, 15),
+                            Birthday = new DateTime(2000, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Kornel",
                             LastName = "Kowalski"
                         },
                         new
                         {
                             IdPatient = 2,
-                            Birthday = new DateOnly(1990, 5, 15),
+                            Birthday = new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Pola",
                             LastName = "Policja"
                         });
@@ -160,11 +160,11 @@ namespace WebDoctorApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPrescription"));
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("DueDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdDoctor")
                         .HasColumnType("int");
@@ -184,16 +184,16 @@ namespace WebDoctorApp.Migrations
                         new
                         {
                             IdPrescription = 1,
-                            Date = new DateOnly(2024, 6, 10),
-                            DueDate = new DateOnly(2024, 6, 17),
+                            Date = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DueDate = new DateTime(2024, 6, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IdDoctor = 1,
                             IdPatient = 1
                         },
                         new
                         {
                             IdPrescription = 2,
-                            Date = new DateOnly(2024, 6, 11),
-                            DueDate = new DateOnly(2024, 6, 18),
+                            Date = new DateTime(2024, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DueDate = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IdDoctor = 2,
                             IdPatient = 2
                         });

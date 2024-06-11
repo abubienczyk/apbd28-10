@@ -5,8 +5,8 @@ public class AddNewPrescriptionDTO
     public PatientDTO patient { get; set; }
     public DoctorDTO doctor { get; set; }
     public ICollection<MedicamentDTO> medicaments { get; set; }
-    public DateOnly Date { get; set; }
-    public DateOnly DueDate { get; set; }
+    public DateTime Date { get; set; }
+    public DateTime DueDate { get; set; }
 }
 
 public class PatientDTO
@@ -16,7 +16,7 @@ public class PatientDTO
     public string FirstName { get; set; }
    
     public string LastName { get; set; }
-    public DateOnly Birthday { get; set; }
+    public DateTime Birthday { get; set; }
 }
 
 public class MedicamentDTO

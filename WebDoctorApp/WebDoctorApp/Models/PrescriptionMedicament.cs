@@ -13,7 +13,7 @@ public class PrescriptionMedicament
     public int IdPrescription { get; set; }
     public int? Dose { get; set; }
     [MaxLength(100)]
-    public string Details { get; set; }
+    public string Details { get; set; }= string.Empty;
 
     [ForeignKey(nameof(IdMedicament))] 
     public Medicament Medicament { get; set; } = null!;

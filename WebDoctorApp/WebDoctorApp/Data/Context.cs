@@ -31,8 +31,8 @@ public class Context : DbContext
         });
         modelBuilder.Entity<Patient>().HasData(new List<Patient>
         {
-            new Patient { IdPatient = 1, FirstName = "Kornel", LastName = "Kowalski",Birthday = new DateOnly(2000, 5, 15) },
-            new Patient { IdPatient = 2, FirstName = "Pola", LastName = "Policja",Birthday = new DateOnly(1990, 5, 15)}
+            new Patient { IdPatient = 1, FirstName = "Kornel", LastName = "Kowalski",Birthday = new DateTime(2000, 5, 15) },
+            new Patient { IdPatient = 2, FirstName = "Pola", LastName = "Policja",Birthday = new DateTime(1990, 5, 15)}
              
         });
         modelBuilder.Entity<Medicament>().HasData(new List<Medicament>
@@ -57,8 +57,8 @@ public class Context : DbContext
             new Prescription
             {
             IdPrescription = 1,
-            Date = new DateOnly(2024, 6, 10),
-            DueDate = new DateOnly(2024, 6, 17),
+            Date = new DateTime(2024, 6, 10),
+            DueDate = new DateTime(2024, 6, 17),
             IdPatient = 1,
             IdDoctor = 1
         },
@@ -66,8 +66,8 @@ public class Context : DbContext
         new Prescription
         {
             IdPrescription = 2,
-            Date = new DateOnly(2024, 6, 11),
-            DueDate = new DateOnly(2024, 6, 18),
+            Date = new DateTime(2024, 6, 11),
+            DueDate = new DateTime(2024, 6, 18),
             IdPatient = 2,
             IdDoctor = 2
         }
