@@ -48,48 +48,38 @@ public class DbService : IDbService
         await _context.SaveChangesAsync();
     }
     
-    // public async Task<ICollection<Order>> GetOrdersData(string? clientLastName)
+    
+    // public async Task<ICollection<Prescription>> GetPatientData(int id)
     // {
-    //     return await _context.Orders
-    //         .Include(e => e.Client)
-    //         .Include(e => e.OrderPastries)
-    //         .ThenInclude(e => e.Pastry)
-    //         .Where(e => clientLastName == null || e.Client.LastName == clientLastName)
+    //     
+    //     return await _context.Prescriptions
+    //         .Include(e => e.Patient)
+    //         .Include(e => e.PrescriptionMedicaments)
+    //         .ThenInclude(e => e.Medicament)
+    //         .Include(p => p.PrescriptionMedicaments)
+    //         .ThenInclude(pm => pm.Prescription)
+    //         .ThenInclude(p => p.Doctor)
+    //         .Where(p => p.Patient.IdPatient == id)
     //         .ToListAsync();
     // }
-    
-    public async Task<ICollection<Prescription>> GetPatientData(int id)
-    {
-        
-        return await _context.Prescriptions
-            .Include(e => e.Patient)
-            .Include(e => e.PrescriptionMedicaments)
-            .ThenInclude(e => e.Medicament)
-            .Include(p => p.PrescriptionMedicaments)
-            .ThenInclude(pm => pm.Prescription)
-            .ThenInclude(p => p.Doctor)
-            .Where(p => p.Patient.IdPatient == id)
-            .ToListAsync();
-        
-        
-        
-        
-        //return await _context.Prescriptions
-        // .Include(e => e.Patient)
-        // .Include(e => e.PrescriptionMedicaments)
-        // .Where(e => e.Patient.IdPatient == id)
-        // .ToListAsync();
-    }
     public async Task<Patient?> GetData(int id)
     {
-        // Pobierz pacjenta razem z jego receptami, lekarzem i lekami
-        return await _context.Patients
+        var patient= await _context.Patients
             .Include(p => p.Prescriptions)
             .ThenInclude(pr => pr.PrescriptionMedicaments)
             .ThenInclude(pm => pm.Medicament)
             .Include(p => p.Prescriptions)
             .ThenInclude(pr => pr.Doctor)
             .FirstOrDefaultAsync(p => p.IdPatient == id);
+        patient.Prescriptions = patient.Prescriptions.OrderBy(pr => pr.DueDate).ToList();
+        return patient;
+        // return await _context.Patients
+        //     .Include(p => p.Prescriptions)
+        //     .ThenInclude(pr => pr.PrescriptionMedicaments)
+        //     .ThenInclude(pm => pm.Medicament)
+        //     .Include(p => p.Prescriptions)
+        //     .ThenInclude(pr => pr.Doctor)
+        //     .FirstOrDefaultAsync(p => p.IdPatient == id);
     }
 
 }
