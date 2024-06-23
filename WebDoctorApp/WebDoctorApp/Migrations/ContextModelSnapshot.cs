@@ -22,6 +22,44 @@ namespace WebDoctorApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("WebDoctorApp.Controllers.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "user1",
+                            Password = "1111"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "user2",
+                            Password = "2222"
+                        });
+                });
+
             modelBuilder.Entity("WebDoctorApp.Models.Doctor", b =>
                 {
                     b.Property<int>("IdDoctor")

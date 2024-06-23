@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WebDoctorApp.Controllers;
 using WebDoctorApp.Models;
 
 namespace WebDoctorApp.Data;
@@ -18,6 +19,7 @@ public class Context : DbContext
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<PrescriptionMedicament> PrescriptionMedicaments { get; set; }
+    public DbSet<User> Users { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -81,6 +83,11 @@ public class Context : DbContext
                 Dose = 2,
                 Details = "Twice a day after meal"
             }
+        });
+        modelBuilder.Entity<User>().HasData(new List<User>
+        {
+            new User { Id=1, Name = "user1", Password = "1111" },
+            new User { Id=2, Name = "user2", Password = "2222" }
         });
     }
 }

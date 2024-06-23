@@ -1,4 +1,5 @@
 using System.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebDoctorApp.DTO_s;
 using WebDoctorApp.Models;
@@ -17,6 +18,7 @@ public class PrescriptionController : ControllerBase
         _dbService = dbService;
     }
 
+    [Authorize]
     [HttpPost("prescriptions")]
     public async Task<IActionResult> AddNewPrescription(AddNewPrescriptionDTO dto)
     {

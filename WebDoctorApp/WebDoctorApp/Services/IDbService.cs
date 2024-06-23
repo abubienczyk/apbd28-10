@@ -1,3 +1,4 @@
+using WebDoctorApp.Controllers;
 using WebDoctorApp.Data;
 using WebDoctorApp.DTO_s;
 using WebDoctorApp.Models;
@@ -14,4 +15,8 @@ public interface IDbService
 
     //public Task<ICollection<Prescription>> GetPatientData(int id);
     public Task<Patient?> GetData(int id);
+
+    public Task<bool> GetUser(string name, string password);
+    public Task AddNewUser(User user);
+    public Task UpdateToken(string name, string password, string token);
 }

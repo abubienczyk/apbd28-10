@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebDoctorApp.DTO_s;
 using WebDoctorApp.Models;
@@ -16,7 +17,7 @@ public class PatientController : ControllerBase
         _dbService = dbService;
     }
     
-    
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetPatientData(int id)
     {
