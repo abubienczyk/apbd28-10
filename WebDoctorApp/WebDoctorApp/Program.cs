@@ -1,4 +1,5 @@
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WebDoctorApp.Controllers;
@@ -13,8 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<TokenController>();
+
 builder.Services.AddControllers();
+builder.Services.AddScoped<AuthenticationController>();
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
@@ -46,12 +48,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
-app.MapControllers();
-// Enable authorization
 app.UseAuthorization();
 app.UseMiddleware<CustomExceptionHandler>();
+
+app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
 

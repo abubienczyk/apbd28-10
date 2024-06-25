@@ -84,10 +84,5 @@ public class Context : DbContext
                 Details = "Twice a day after meal"
             }
         });
-        modelBuilder.Entity<User>().HasData(new List<User>
-        {
-            new User { Id=1, Name = "user1", Password = "1111" },
-            new User { Id=2, Name = "user2", Password = "2222" }
-        });
     }
 }

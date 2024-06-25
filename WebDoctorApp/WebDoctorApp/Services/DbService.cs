@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebDoctorApp.Controllers;
 using WebDoctorApp.Data;
 using WebDoctorApp.DTO_s;
+using WebDoctorApp.Helpers;
 using WebDoctorApp.Models;
 
 namespace WebDoctorApp.Services;
@@ -63,22 +64,34 @@ public class DbService : IDbService
         
     }
 
-    public async Task<bool> GetUser(string name, string password)
+    public async Task<User> GetUser(string name)
     {
-         return await _context.Users.AnyAsync(u => u.Name == name && u.Password == password);
+         return await _context.Users.FirstOrDefaultAsync(u => u.Login == name );
     }
 
     public async Task AddNewUser(User user)
     {
-        await _context.AddAsync(user);
+        await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdateToken(string name, string password, string token)
     {
-        var user= await _context.Users.FirstOrDefaultAsync(u => u.Name == name && u.Password == password);
-        user.Token = token;
+        var user= await _context.Users.FirstOrDefaultAsync(u => u.Login == name && u.Password == password);
+        user.RefreshToken = token;
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task SaveTokenInfo(User user, string tokeRef, DateTime exp)
+    {
+        user.RefreshToken = SecurityHelper.GenerateRefreshToken();
+        user.RefreshTokenExp = DateTime.Now.AddDays(1);
+        _context.SaveChanges();
+    }
+
+    public async Task<User> GetUserByToken(string token)
+    {
+        return await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == token );
     }
 }

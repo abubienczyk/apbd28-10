@@ -16,7 +16,9 @@ public interface IDbService
     //public Task<ICollection<Prescription>> GetPatientData(int id);
     public Task<Patient?> GetData(int id);
 
-    public Task<bool> GetUser(string name, string password);
+    public Task<User> GetUser(string name);
+    public Task<User> GetUserByToken(string token);
     public Task AddNewUser(User user);
+    public Task SaveTokenInfo(User user,string tokeRef, DateTime exp);
     public Task UpdateToken(string name, string password, string token);
 }

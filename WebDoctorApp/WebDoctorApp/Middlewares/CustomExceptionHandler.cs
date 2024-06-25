@@ -5,12 +5,14 @@ namespace WebDoctorApp.Middlewares;
 public class CustomExceptionHandler
 {
     private readonly RequestDelegate _next;
-    
-    public CustomExceptionHandler(RequestDelegate next)
+    private readonly ILogger<CustomExceptionHandler> _logger;
+
+    public CustomExceptionHandler(RequestDelegate next, ILogger<CustomExceptionHandler> logger)
     {
         _next = next;
+        _logger = logger;
     }
-    
+
     // Implement exception handling here
     public async Task InvokeAsync(HttpContext context)
     {
@@ -20,20 +22,31 @@ public class CustomExceptionHandler
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "An unhandled exception occurred");
             await HandleExceptionAsync(context, ex);
           
         }
     }
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+        // Set the status code and response content
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        var response = new { message = "Wystąpił błąd podczas przetwarzania Twojego żądania." };
+        // Create a response model
+        var response = new
+        {
+            error = new
+            {
+                message = "An error occurred while processing your request.",
+                detail = exception.Message
+            }
+        };
 
-        // Tutaj możesz dodać logowanie szczegółowe błędu, np. z użyciem ILogger
-        Console.WriteLine($"Exception: {exception.Message}");
+        // Serialize the response model to JSON
+        var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
 
-        return context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(response));
+        // Write the JSON response to the HTTP response
+        return context.Response.WriteAsync(jsonResponse);
     }
 }
